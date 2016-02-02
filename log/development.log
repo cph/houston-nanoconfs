@@ -1,0 +1,1294 @@
+[94m[daemon:scheduler] Skipping daemon since we're not running as a server[0m
+[34;1mSetting up observers for RunTestsOnPostReceive[0m
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL) [0m
+  [1m[35m (1.4ms)[0m  CREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateProjects (20120324185914)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "projects" ("id" serial primary key, "name" character varying, "slug" character varying, "unfuddle_id" integer, "git_url" character varying, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120324185914')  [["version", "20120324185914"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+Migrating to CreateEnvironments (20120324202224)
+  [1m[35m (0.3ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (4.1ms)[0m  [1mCREATE TABLE "environments" ("id" serial primary key, "slug" character varying, "name" character varying, "project_id" integer, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120324202224')  [["version", "20120324202224"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to CreateReleases (20120324212848)
+  [1m[35m (0.3ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "releases" ("id" serial primary key, "environment_id" integer, "name" character varying, "commit0" character varying, "commit1" character varying, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120324212848')  [["version", "20120324212848"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateChanges (20120324212946)
+  [1m[35m (0.3ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (9.8ms)[0m  [1mCREATE TABLE "changes" ("id" serial primary key, "release_id" integer, "description" character varying, "ticket_number" integer, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120324212946')  [["version", "20120324212946"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateCommits (20120324230038)
+  [1m[35m (0.3ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "commits" ("id" serial primary key, "release_id" integer, "sha" character varying, "message" text, "committer" character varying, "date" date, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120324230038')  [["version", "20120324230038"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddInitialCommitToEnvironments (20120406185643)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "environments" ADD "initial_commit" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120406185643')  [["version", "20120406185643"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddKanbanFieldsToProjects (20120408155047)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ADD "color" character varying[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" ADD "kanban_field" character varying
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ADD "development_id" integer[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" ADD "testing_id" integer
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ADD "production_id" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120408155047')  [["version", "20120408155047"]]
+  [1m[36m (1.3ms)[0m  [1mCOMMIT[0m
+Migrating to DeviseCreateUsers (20120417175450)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (5.1ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "name" character varying, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "sign_in_count" integer DEFAULT 0, "current_sign_in_at" timestamp, "last_sign_in_at" timestamp, "current_sign_in_ip" character varying, "last_sign_in_ip" character varying, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.7ms)[0m  CREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")
+  [1m[36m (2.5ms)[0m  [1mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120417175450')  [["version", "20120417175450"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to DeviseInvitableAddToUsers (20120417175841)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" ADD "invitation_token" character varying(60)[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ADD "invitation_sent_at" timestamp
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "invitation_accepted_at" timestamp[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "users" ADD "invitation_limit" integer
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "invited_by_id" integer[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "users" ADD "invited_by_type" character varying
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_users_on_invitation_token" ON "users"  ("invitation_token")[0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX  "index_users_on_invited_by_id" ON "users"  ("invited_by_id")
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ALTER "encrypted_password" DROP NOT NULL[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120417175841')  [["version", "20120417175841"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddRoleToUsers (20120417190504)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (9.2ms)[0m  [1mALTER TABLE "users" ADD "role" character varying DEFAULT 'Guest'[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120417190504')  [["version", "20120417190504"]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTickets (20120417195313)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (3.4ms)[0m  [1mCREATE TABLE "tickets" ("id" serial primary key, "project_id" integer, "number" integer, "summary" character varying, "description" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120417195313')  [["version", "20120417195313"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTicketQueues (20120417195433)
+  [1m[35m (5.1ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (5.6ms)[0m  [1mCREATE TABLE "ticket_queues" ("id" serial primary key, "ticket_id" integer, "queue" character varying, "destroyed_at" timestamp, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120417195433')  [["version", "20120417195433"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTestingNotes (20120424212706)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (3.6ms)[0m  [1mCREATE TABLE "testing_notes" ("id" serial primary key, "user_id" integer, "ticket_id" integer, "verdict" character varying NOT NULL, "comment" character varying DEFAULT '' NOT NULL, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (0.8ms)[0m  CREATE  INDEX  "index_testing_notes_on_user_id" ON "testing_notes"  ("user_id")
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_testing_notes_on_ticket_id" ON "testing_notes"  ("ticket_id")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120424212706')  [["version", "20120424212706"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddUnfuddleIdToTickets (20120501230243)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "tickets" ADD "unfuddle_id" integer[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120501230243')  [["version", "20120501230243"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddExpiresAtToTestingNotes (20120501231817)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "testing_notes" ADD "expires_at" timestamp[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120501231817')  [["version", "20120501231817"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddUnfuddleIdToTestingNotes (20120501231948)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "testing_notes" ADD "unfuddle_id" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120501231948')  [["version", "20120501231948"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to LinkTicketsAndReleases (20120504143615)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "releases_tickets" ("release_id" integer, "ticket_id" integer) [0m
+  [1m[35m (1.1ms)[0m  CREATE UNIQUE INDEX  "index_releases_tickets_on_release_id_and_ticket_id" ON "releases_tickets"  ("release_id", "ticket_id")
+  [1m[36mRelease Load (0.9ms)[0m  [1mSELECT "releases".* FROM "releases"  ORDER BY created_at DESC[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120504143615')  [["version", "20120504143615"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddHealthFieldsToProjects (20120525013703)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ADD "assign_health_query" character varying[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" ADD "new_tickets_query" character varying
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120525013703')[0m  [["version", "20120525013703"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddCachedQueriesToProjects (20120607124115)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ADD "cached_queries" text
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120607124115')[0m  [["version", "20120607124115"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddDeploymentToTickets (20120626140242)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" ADD "deployment" character varying
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120626140242')[0m  [["version", "20120626140242"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddLastReleaseAtToTickets (20120626150333)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" ADD "last_release_at" timestamp
+  [1m[36mTicket Load (0.8ms)[0m  [1mSELECT "tickets".* FROM "tickets"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120626150333')  [["version", "20120626150333"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to LinkTicketsAndCommits (20120626151320)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.8ms)[0m  [1mCREATE TABLE "commits_tickets" ("commit_id" integer, "ticket_id" integer) [0m
+  [1m[35m (1.5ms)[0m  CREATE UNIQUE INDEX  "index_commits_tickets_on_commit_id_and_ticket_id" ON "commits_tickets"  ("commit_id", "ticket_id")
+  [1m[36mCommit Load (0.8ms)[0m  [1mSELECT "commits".* FROM "commits"  ORDER BY "commits"."created_at" ASC[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120626151320')  [["version", "20120626151320"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddCommitterEmailToCommits (20120626152020)
+  [1m[35m (2.1ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "commits" ADD "committer_email" character varying[0m
+  [1m[35mCommit Load (0.9ms)[0m  SELECT "commits".* FROM "commits"  ORDER BY "commits"."created_at" ASC
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120626152020')[0m  [["version", "20120626152020"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to ReplaceCommitterInfoWithAuthorInfo (20120626152949)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mCommit Load (0.4ms)[0m  SELECT "commits".* FROM "commits"  ORDER BY "commits"."created_at" ASC
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120626152949')[0m  [["version", "20120626152949"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to ChangeTestingNotesCommentToText (20120715230526)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.2ms)[0m  ALTER TABLE "testing_notes" ALTER COLUMN "comment" TYPE text
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120715230526')[0m  [["version", "20120715230526"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateUserNotifications (20120715230922)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (3.8ms)[0m  CREATE TABLE "user_notifications" ("id" serial primary key, "user_id" integer, "project_id" integer, "environment" character varying, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36mUser Load (1.0ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120715230922')  [["version", "20120715230922"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddUserToReleases (20120716010743)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "releases" ADD "user_id" integer[0m
+  [1m[35mUser Load (0.5ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "releases" ALTER "user_id" SET NOT NULL[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120716010743')  [["version", "20120716010743"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddMessageToRelease (20120726212620)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (11.2ms)[0m  [1mALTER TABLE "releases" ADD "message" text DEFAULT '' NOT NULL[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120726212620')  [["version", "20120726212620"]]
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+Migrating to LinkProjectsAndMaintainers (20120726231754)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "projects_maintainers" ("project_id" integer, "user_id" integer) [0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX  "index_projects_maintainers_on_project_id_and_user_id" ON "projects_maintainers"  ("project_id", "user_id")
+  [1m[36mProject Load (0.8ms)[0m  [1mSELECT "projects".* FROM "projects"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120726231754')  [["version", "20120726231754"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddGoldmineToTickets (20120804003344)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "tickets" ADD "goldmine" character varying[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120804003344')  [["version", "20120804003344"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddErrbitAppIdToProjects (20120823025935)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ADD "errbit_app_id" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120823025935')  [["version", "20120823025935"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddAuthenticationTokenToUsers (20120826022643)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "authentication_token" character varying[0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX  "index_users_on_authentication_token" ON "users"  ("authentication_token")
+  [1m[36mUser Load (0.5ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120826022643')  [["version", "20120826022643"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddGitLastSyncAtToProjects (20120827190634)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ADD "git_last_sync_at" timestamp[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120827190634')  [["version", "20120827190634"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddNewRelicIdToProjects (20120913020218)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ADD "new_relic_id" integer[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20120913020218')  [["version", "20120913020218"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddAdministratorToUsers (20120920023251)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (7.2ms)[0m  [1mALTER TABLE "users" ADD "administrator" boolean DEFAULT 'f'[0m
+  [1m[35mSQL (0.6ms)[0m  UPDATE "users" SET "administrator" = 't', "role" = 'Developer' WHERE "users"."role" = 'Administrator'  [["role", "Administrator"]]
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120920023251')[0m  [["version", "20120920023251"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+Migrating to AddUnfuddleIdToUsers (20120922010212)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "users" ADD "unfuddle_id" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20120922010212')[0m  [["version", "20120922010212"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to SplitUsersNameIntoFirstAndLast (20121026014457)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "users" ADD "first_name" character varying
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "last_name" character varying[0m
+  [1m[35mUser Load (0.8ms)[0m  SELECT "users".* FROM "users"  ORDER BY last_name, first_name
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121026014457')[0m  [["version", "20121026014457"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateDeploys (20121027160548)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (3.8ms)[0m  CREATE TABLE "deploys" ("id" serial primary key, "project_id" integer, "environment_id" integer, "commit" character varying, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121027160548')[0m  [["version", "20121027160548"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddDeployIdToReleases (20121027171215)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "releases" ADD "deploy_id" integer
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_releases_on_deploy_id" ON "releases"  ("deploy_id")[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20121027171215')  [["version", "20121027171215"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddTagSlugToChanges (20121104233305)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "changes" ADD "tag_slug" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20121104233305')  [["version", "20121104233305"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddRetiredAtToProjects (20121126005019)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ADD "retired_at" timestamp[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20121126005019')  [["version", "20121126005019"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddEstimatedEffortAndEstimatedValueToTickets (20121214025558)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "tickets" ADD "estimated_effort" decimal(9,2)[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "tickets" ADD "estimated_value" decimal(11,2)
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121214025558')[0m  [["version", "20121214025558"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to AddCategoryToProjects (20121219202734)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" ADD "category" character varying
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121219202734')[0m  [["version", "20121219202734"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddExpiresAtToTickets (20121220031008)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" ADD "expires_at" timestamp
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121220031008')[0m  [["version", "20121220031008"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddVersionControlAdapterToProjects (20121222170917)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (4.3ms)[0m  ALTER TABLE "projects" ADD "version_control_adapter" character varying DEFAULT 'None' NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" RENAME COLUMN "git_url" TO "version_control_location"[0m
+  [1m[35mProject Load (0.5ms)[0m  SELECT "projects".* FROM "projects"  ORDER BY "projects"."name" ASC
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121222170917')[0m  [["version", "20121222170917"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+Migrating to RemoveUnusedFieldsFromProjects (20121222223325)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" DROP "kanban_field"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" DROP "development_id"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" DROP "testing_id"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" DROP "production_id"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" DROP "assign_health_query"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" DROP "new_tickets_query"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" DROP "git_last_sync_at"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121222223325')[0m  [["version", "20121222223325"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddTicketTrackingAdapterToProjects (20121222223635)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (4.6ms)[0m  ALTER TABLE "projects" ADD "ticket_tracking_adapter" character varying DEFAULT 'None' NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" RENAME COLUMN "unfuddle_id" TO "ticket_tracking_id"[0m
+  [1m[35mProject Load (0.5ms)[0m  SELECT "projects".* FROM "projects"  ORDER BY "projects"."name" ASC
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121222223635')[0m  [["version", "20121222223635"]]
+  [1m[35m (0.9ms)[0m  COMMIT
+Migrating to RenameEnvironments (20121224212623)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35mRenameEnvironments::Environment Load (0.6ms)[0m  SELECT "environments".* FROM "environments"
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20121224212623')[0m  [["version", "20121224212623"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to ReplaceEnvironmentIdWithEnvironmentName (20121225175106)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (4.7ms)[0m  ALTER TABLE "deploys" ADD "environment_name" character varying DEFAULT 'Production' NOT NULL
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_deploys_on_environment_name" ON "deploys"  ("environment_name")[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_deploys_on_project_id_and_environment_name" ON "deploys"  ("project_id", "environment_name")
+  [1m[36mDeploy Load (0.4ms)[0m  [1mSELECT "deploys".* FROM "deploys"[0m
+  [1m[35m (5.8ms)[0m  ALTER TABLE "releases" ADD "project_id" integer DEFAULT -1 NOT NULL
+  [1m[36m (4.4ms)[0m  [1mALTER TABLE "releases" ADD "environment_name" character varying DEFAULT 'Production' NOT NULL[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_releases_on_project_id" ON "releases"  ("project_id")
+  [1m[36m (1.2ms)[0m  [1mCREATE  INDEX  "index_releases_on_project_id_and_environment_name" ON "releases"  ("project_id", "environment_name")[0m
+  [1m[35mRelease Load (0.5ms)[0m  SELECT "releases".* FROM "releases"  ORDER BY created_at DESC
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "user_notifications" RENAME COLUMN "environment" TO "environment_name"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20121225175106')  [["version", "20121225175106"]]
+  [1m[36m (2.7ms)[0m  [1mCOMMIT[0m
+Migrating to SetupHstore (20121230173644)
+  [1m[35m (0.6ms)[0m  BEGIN
+  [1m[36mSQL (53.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "hstore"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20121230173644')  [["version", "20121230173644"]]
+  [1m[36m (1.1ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTestRuns (20121230174234)
+  [1m[35m (0.3ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (3.8ms)[0m  [1mCREATE TABLE "test_runs" ("id" serial primary key, "project_id" integer NOT NULL, "commit" character varying NOT NULL, "completed_at" timestamp, "results_url" character varying, "result" character varying, "duration" integer, "fail_count" integer, "pass_count" integer, "skip_count" integer, "details" hstore, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX  "index_test_runs_on_project_id" ON "test_runs"  ("project_id")
+  [1m[36m (0.9ms)[0m  [1mCREATE UNIQUE INDEX  "index_test_runs_on_commit" ON "test_runs"  ("commit")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20121230174234')  [["version", "20121230174234"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddCIAdapterToProjects (20130105200429)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (5.0ms)[0m  [1mALTER TABLE "projects" ADD "ci_adapter" character varying DEFAULT 'None' NOT NULL[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130105200429')  [["version", "20130105200429"]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+Migrating to ReplaceTestRunsDetailsWithTests (20130106184327)
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "test_runs" DROP "details"[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "test_runs" ADD "tests" text
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130106184327')[0m  [["version", "20130106184327"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+Migrating to AddTotalCountToTestRuns (20130106185425)
+  [1m[36m (3.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.7ms)[0m  ALTER TABLE "test_runs" ADD "total_count" integer
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130106185425')[0m  [["version", "20130106185425"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to RemoveCachedQueriesFromProjects (20130119203853)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" DROP "cached_queries"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130119203853')[0m  [["version", "20130119203853"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddExtendedAttributesToTickets (20130119204608)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "tickets" ADD "extended_attributes" hstore
+  [1m[36mTicket Load (0.5ms)[0m  [1mSELECT  "tickets".* FROM "tickets"  ORDER BY "tickets"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130119204608')  [["version", "20130119204608"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to RemoveEstimatedEffortAndEstimatedValueFromTickets (20130119211540)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tickets" DROP "estimated_effort"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" DROP "estimated_value"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130119211540')[0m  [["version", "20130119211540"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to RenameTicketsUnfuddleIdToRemoteId (20130119212008)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" RENAME COLUMN "unfuddle_id" TO "remote_id"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130119212008')[0m  [["version", "20130119212008"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateTicketPrerequisites (20130120182026)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (3.1ms)[0m  CREATE TABLE "ticket_prerequisites" ("id" serial primary key, "ticket_id" integer, "project_id" integer, "prerequisite_ticket_number" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX  "index_ticket_prerequisites_on_ticket_id" ON "ticket_prerequisites"  ("ticket_id")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130120182026')  [["version", "20130120182026"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddMinPassingVerdictsToProjects (20130211015046)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (8.0ms)[0m  [1mALTER TABLE "projects" ADD "min_passing_verdicts" integer DEFAULT 1 NOT NULL[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130211015046')  [["version", "20130211015046"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+Migrating to ChangeDefaultRoleForUsers (20130302205014)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "users" ALTER COLUMN "role" SET DEFAULT 'Guest'[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130302205014')  [["version", "20130302205014"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddAgentEmailToTestRuns (20130306023456)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ADD "agent_email" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130306023456')  [["version", "20130306023456"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddBranchToTestRuns (20130306023613)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (1.5ms)[0m  [1mALTER TABLE "test_runs" ADD "branch" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130306023613')  [["version", "20130306023613"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateErrors (20130312224911)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (3.9ms)[0m  [1mCREATE TABLE "errors" ("id" serial primary key, "project_id" integer, "category" character varying, "message" character varying, "backtrace" text, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130312224911')  [["version", "20130312224911"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddCoverageToTestRuns (20130319003918)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "test_runs" ADD "coverage" text[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ADD "covered_percent" decimal(6,5)
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ADD "covered_strength" decimal(6,5)[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130319003918')  [["version", "20130319003918"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateRoles (20130407195450)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (3.3ms)[0m  [1mCREATE TABLE "roles" ("id" serial primary key, "user_id" integer, "project_id" integer, "name" character varying NOT NULL, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX  "index_roles_on_user_id_and_project_id" ON "roles"  ("user_id", "project_id")
+  [1m[36m (1.6ms)[0m  [1mCREATE  INDEX  "index_roles_on_user_id_and_project_id_and_name" ON "roles"  ("user_id", "project_id", "name")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130407195450')  [["version", "20130407195450"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to PopulateRoles (20130407200624)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mSELECT "users"."id" FROM "users" WHERE "users"."role" = 'Developer'  ORDER BY last_name, first_name[0m  [["role", "Developer"]]
+  [1m[35m (0.3ms)[0m  SELECT "users"."id" FROM "users" WHERE "users"."role" = 'Tester'  ORDER BY last_name, first_name  [["role", "Tester"]]
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mProject Load (0.6ms)[0m  [1mSELECT  "projects".* FROM "projects"  ORDER BY "projects"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130407200624')  [["version", "20130407200624"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddProjectIdToTestingNotes (20130407220039)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "testing_notes" ADD "project_id" integer[0m
+  [1m[35mTestingNote Load (0.6ms)[0m  SELECT  "testing_notes".* FROM "testing_notes"  ORDER BY "testing_notes"."id" ASC LIMIT 1000
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "testing_notes" ALTER "project_id" SET NOT NULL[0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX  "index_testing_notes_on_project_id" ON "testing_notes"  ("project_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130407220039')[0m  [["version", "20130407220039"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddProjectIdToCommits (20130407220937)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "commits" ADD "project_id" integer
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mCommit Load (0.4ms)[0m  [1mSELECT  "commits".* FROM "commits"  ORDER BY "commits"."id" ASC LIMIT 1000[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "commits" ALTER "project_id" SET NOT NULL
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_commits_on_project_id" ON "commits"  ("project_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130407220937')  [["version", "20130407220937"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddEnvironmentsSubscribedToToUsers (20130416020627)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (15.4ms)[0m  [1mALTER TABLE "users" ADD "environments_subscribed_to" character varying DEFAULT '' NOT NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mUser Load (0.7ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130416020627')[0m  [["version", "20130416020627"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+Migrating to RenameTicketTrackingToTicketTracker (20130420151334)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "projects" RENAME COLUMN "ticket_tracking_adapter" TO "ticket_tracker_name"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" RENAME COLUMN "ticket_tracking_id" TO "ticket_tracker_id"[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130420151334')  [["version", "20130420151334"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to RenameProjectsVersionControlAdapterToVersionControlName (20130420155332)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" RENAME COLUMN "version_control_adapter" TO "version_control_name"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130420155332')  [["version", "20130420155332"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to RenameProjectsCiAdapterToCiServerName (20130420172322)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" RENAME COLUMN "ci_adapter" TO "ci_server_name"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130420172322')  [["version", "20130420172322"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to RenameProjectsErrbitAppIdToErrorTrackerId (20130420174002)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" RENAME COLUMN "errbit_app_id" TO "error_tracker_id"[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130420174002')  [["version", "20130420174002"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddErrorTrackerNameToProjects (20130420174126)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (4.8ms)[0m  [1mALTER TABLE "projects" ADD "error_tracker_name" character varying DEFAULT 'None'[0m
+  [1m[35mSQL (5.1ms)[0m  UPDATE "projects" SET error_tracker_name = 'Errbit' WHERE "projects"."id" IN (SELECT "projects"."id" FROM "projects" WHERE (error_tracker_id != '')  ORDER BY "projects"."name" ASC)
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130420174126')[0m  [["version", "20130420174126"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+Migrating to CreateProjectQuotas (20130427223925)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (2.5ms)[0m  CREATE TABLE "project_quotas" ("id" serial primary key, "project_id" integer NOT NULL, "week" date NOT NULL, "value" integer NOT NULL, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX  "index_project_quotas_on_project_id_and_week" ON "project_quotas"  ("project_id", "week")[0m
+  [1m[35m (0.8ms)[0m  CREATE  INDEX  "index_project_quotas_on_week" ON "project_quotas"  ("week")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130427223925')[0m  [["version", "20130427223925"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateSettings (20130428005808)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (4.8ms)[0m  CREATE TABLE "settings" ("id" serial primary key, "name" character varying NOT NULL, "value" character varying NOT NULL) 
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130428005808')[0m  [["version", "20130428005808"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddExtendedAttributesToProjects (20130504014802)
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" ADD "extended_attributes" hstore
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mProject Load (0.5ms)[0m  [1mSELECT  "projects".* FROM "projects"  ORDER BY "projects"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130504014802')  [["version", "20130504014802"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddAntecedentsToTickets (20130504135741)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "tickets" ADD "antecedents" character varying[][0m
+  [1m[35mTicket Load (0.5ms)[0m  SELECT  "tickets".* FROM "tickets"  ORDER BY "tickets"."id" ASC LIMIT 1000
+  [1m[36mSQL (5.5ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130504135741')[0m  [["version", "20130504135741"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddTagsToTickets (20130505144446)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "tickets" ADD "tags" character varying[]
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130505144446')[0m  [["version", "20130505144446"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddTypeToTickets (20130505162039)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "tickets" ADD "type" character varying
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130505162039')[0m  [["version", "20130505162039"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddClosedAtToTickets (20130505212838)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "tickets" ADD "closed_at" timestamp
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130505212838')[0m  [["version", "20130505212838"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to DropEnvironments (20130518224352)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.3ms)[0m  DROP TABLE "environments"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130518224352')[0m  [["version", "20130518224352"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+Migrating to DropProjectsMaintainers (20130518224406)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.7ms)[0m  DROP TABLE "projects_maintainers"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130518224406')[0m  [["version", "20130518224406"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to RemoveGoldmineFromTickets (20130518224655)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.6ms)[0m  ALTER TABLE "tickets" DROP "goldmine"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130518224655')[0m  [["version", "20130518224655"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to RemovePreAdapterFieldsFromProjects (20130518224722)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.9ms)[0m  ALTER TABLE "projects" DROP "ticket_tracker_id"
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "projects" DROP "error_tracker_id"[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" DROP "version_control_location"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130518224722')[0m  [["version", "20130518224722"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateUserCredentials (20130519163615)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (4.0ms)[0m  CREATE TABLE "user_credentials" ("id" serial primary key, "user_id" integer, "service" character varying, "login" character varying, "password" bytea, "password_key" bytea, "password_iv" bytea, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130519163615')[0m  [["version", "20130519163615"]]
+  [1m[35m (1.5ms)[0m  COMMIT
+Migrating to AddReporterEmailAndReporterIdToTickets (20130525192607)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "tickets" ADD "reporter_email" character varying
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "tickets" ADD "reporter_id" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130525192607')  [["version", "20130525192607"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddRegressionCountToTestRuns (20130525222131)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ADD "regression_count" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130525222131')  [["version", "20130525222131"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to GiveDefaultValuesForCountsFromTestRuns (20130526024851)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "duration" TYPE integer[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "duration" SET DEFAULT 0
+  [1m[36m (0.7ms)[0m  [1mUPDATE "test_runs" SET "duration"=0 WHERE "duration" IS NULL[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "test_runs" ALTER "duration" SET NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "fail_count" TYPE integer[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "fail_count" SET DEFAULT 0
+  [1m[36m (0.4ms)[0m  [1mUPDATE "test_runs" SET "fail_count"=0 WHERE "fail_count" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "fail_count" SET NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "pass_count" TYPE integer[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "pass_count" SET DEFAULT 0
+  [1m[36m (0.3ms)[0m  [1mUPDATE "test_runs" SET "pass_count"=0 WHERE "pass_count" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "pass_count" SET NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "skip_count" TYPE integer[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "skip_count" SET DEFAULT 0
+  [1m[36m (0.3ms)[0m  [1mUPDATE "test_runs" SET "skip_count"=0 WHERE "skip_count" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "skip_count" SET NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "total_count" TYPE integer[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "total_count" SET DEFAULT 0
+  [1m[36m (0.3ms)[0m  [1mUPDATE "test_runs" SET "total_count"=0 WHERE "total_count" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "total_count" SET NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "regression_count" TYPE integer[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "regression_count" SET DEFAULT 0
+  [1m[36m (0.4ms)[0m  [1mUPDATE "test_runs" SET "regression_count"=0 WHERE "regression_count" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "regression_count" SET NOT NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "covered_percent" TYPE decimal(6,5)[0m
+  [1m[35m (0.6ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "covered_percent" SET DEFAULT 0
+  [1m[36m (0.4ms)[0m  [1mUPDATE "test_runs" SET "covered_percent"=0 WHERE "covered_percent" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "covered_percent" SET NOT NULL
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "test_runs" ALTER COLUMN "covered_strength" TYPE decimal(6,5)[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "test_runs" ALTER COLUMN "covered_strength" SET DEFAULT 0
+  [1m[36m (0.4ms)[0m  [1mUPDATE "test_runs" SET "covered_strength"=0 WHERE "covered_strength" IS NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" ALTER "covered_strength" SET NOT NULL
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130526024851')[0m  [["version", "20130526024851"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to DropDeprecatedProjectRoles (20130706141443)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  DELETE FROM "roles" WHERE "roles"."name" IN ('Contributor', 'Tester')
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130706141443')[0m  [["version", "20130706141443"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddAuthoredAtToCommits (20130710233849)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "commits" ADD "authored_at" timestamp
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mProject Load (0.5ms)[0m  [1mSELECT  "projects".* FROM "projects"  ORDER BY "projects"."id" ASC LIMIT 1000[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "commits"
+  [1m[36mProject Load (0.4ms)[0m  [1mSELECT  "projects".* FROM "projects"  ORDER BY "projects"."id" ASC LIMIT 1000[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "commits" ALTER "authored_at" SET NOT NULL
+  [1m[36mSQL (0.5ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130710233849')[0m  [["version", "20130710233849"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+Migrating to DowncaseCommitsCommitterEmails (20130711004558)
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mCommit Load (0.7ms)[0m  SELECT  "commits".* FROM "commits"  ORDER BY "commits"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130711004558')[0m  [["version", "20130711004558"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to LinkCommitsAndUsers (20130711013156)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.0ms)[0m  CREATE TABLE "commits_users" ("commit_id" integer, "user_id" integer) 
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX  "index_commits_users_on_commit_id_and_user_id" ON "commits_users"  ("commit_id", "user_id")[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "commits"
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mCommit Load (0.5ms)[0m  [1mSELECT  "commits".* FROM "commits"  ORDER BY "commits"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130711013156')  [["version", "20130711013156"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddRetiredAtToUsers (20130728191005)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" ADD "retired_at" timestamp[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130728191005')  [["version", "20130728191005"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to LinkCommitsAndReleases (20130806143651)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.2ms)[0m  [1mCREATE TABLE "commits_releases" ("commit_id" integer, "release_id" integer) [0m
+  [1m[35m (2.1ms)[0m  CREATE UNIQUE INDEX  "index_commits_releases_on_commit_id_and_release_id" ON "commits_releases"  ("commit_id", "release_id")
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mCommit Load (0.5ms)[0m  [1mSELECT  "commits".* FROM "commits"  ORDER BY "commits"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130806143651')  [["version", "20130806143651"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddUnreachableToCommits (20130815232527)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (4.8ms)[0m  [1mALTER TABLE "commits" ADD "unreachable" boolean DEFAULT 'f' NOT NULL[0m
+  [1m[35m (0.8ms)[0m  CREATE  INDEX  "index_commits_on_unreachable" ON "commits"  ("unreachable")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130815232527')[0m  [["version", "20130815232527"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+Migrating to RenameTestRunsCommitToSha (20130914152419)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_runs" RENAME COLUMN "commit" TO "sha"
+  [1m[36m (0.3ms)[0m  [1mALTER INDEX "index_test_runs_on_commit" RENAME TO "index_test_runs_on_sha"[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130914152419')  [["version", "20130914152419"]]
+  [1m[36m (1.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddCodeClimateRepoTokenToProjects (20130914155044)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (4.8ms)[0m  [1mALTER TABLE "projects" ADD "code_climate_repo_token" character varying DEFAULT '' NOT NULL[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20130914155044')  [["version", "20130914155044"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+Migrating to CreateMilestones (20130921141449)
+  [1m[35m (0.2ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (3.8ms)[0m  [1mCREATE TABLE "milestones" ("id" serial primary key, "project_id" integer NOT NULL, "remote_id" integer, "name" character varying NOT NULL, "tickets_count" integer DEFAULT 0, "completed_at" timestamp, "extended_attributes" hstore, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX  "index_milestones_on_project_id" ON "milestones"  ("project_id")
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tickets" ADD "milestone_id" integer[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_tickets_on_milestone_id" ON "tickets"  ("milestone_id")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20130921141449')[0m  [["version", "20130921141449"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddLastTicketTrackerSyncAtToProjects (20131002005512)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ADD "last_ticket_tracker_sync_at" timestamp
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131002005512')[0m  [["version", "20131002005512"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddTicketTrackerSyncStartedAtToProjects (20131002015547)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ADD "ticket_tracker_sync_started_at" timestamp
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131002015547')[0m  [["version", "20131002015547"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddDestroyedAtToTickets (20131002145620)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" ADD "destroyed_at" timestamp
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_tickets_on_destroyed_at" ON "tickets"  ("destroyed_at")[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20131002145620')  [["version", "20131002145620"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+Migrating to AddDestroyedAtToMilestones (20131003014023)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "milestones" ADD "destroyed_at" timestamp[0m
+  [1m[35m (1.2ms)[0m  CREATE  INDEX  "index_milestones_on_destroyed_at" ON "milestones"  ("destroyed_at")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131003014023')[0m  [["version", "20131003014023"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddResolutionToTickets (20131004015452)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "tickets" ADD "resolution" character varying DEFAULT '' NOT NULL
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_tickets_on_resolution" ON "tickets"  ("resolution")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20131004015452')  [["version", "20131004015452"]]
+  [1m[36m (0.9ms)[0m  [1mCOMMIT[0m
+Migrating to AddFirstReleaseAtToTickets (20131004185618)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "tickets" ADD "first_release_at" timestamp[0m
+  [1m[35mTicket Load (0.8ms)[0m  SELECT "tickets".* FROM "tickets" WHERE "tickets"."destroyed_at" IS NULL  ORDER BY "tickets"."number" ASC
+  [1m[36mSQL (0.4ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131004185618')[0m  [["version", "20131004185618"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to CreateSprints (20131012152403)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (8.9ms)[0m  CREATE TABLE "sprints" ("id" serial primary key, "project_id" integer NOT NULL, "end_date" date, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_sprints_on_project_id_and_end_date" ON "sprints"  ("project_id", "end_date")[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "tickets" ADD "sprint_id" integer
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_tickets_on_sprint_id" ON "tickets"  ("sprint_id")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20131012152403')  [["version", "20131012152403"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddCheckedOutToTickets (20131013185636)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tickets" ADD "checked_out_at" timestamp[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" ADD "checked_out_by_id" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131013185636')[0m  [["version", "20131013185636"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddPriorityToTickets (20131027214942)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (8.9ms)[0m  ALTER TABLE "tickets" ADD "priority" character varying DEFAULT 'normal' NOT NULL
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131027214942')[0m  [["version", "20131027214942"]]
+  [1m[35m (1.3ms)[0m  COMMIT
+Migrating to DeleteDuplicateCommits (20131112010815)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.6ms)[0m  SELECT id, sha FROM commits
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "commits"[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "commits"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20131112010815')[0m  [["version", "20131112010815"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to CreateOauthConsumerTokens (20131216014505)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (11.3ms)[0m  CREATE TABLE "consumer_tokens" ("id" serial primary key, "user_id" integer, "type" character varying(30), "token" character varying(1024), "refresh_token" character varying, "secret" character varying, "expires_at" integer, "expires_in" character varying, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.5ms)[0m  [1mCREATE UNIQUE INDEX  "index_consumer_tokens_on_token" ON "consumer_tokens"  ("token")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20131216014505')  [["version", "20131216014505"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddReopenedAtToTickets (20131223194246)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tickets" ADD "reopened_at" timestamp[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20131223194246')  [["version", "20131223194246"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddOptionsToProjects (20140106212047)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ADD "view_options" hstore[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140106212047')  [["version", "20140106212047"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddOptionsToUsers (20140106212305)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" ADD "view_options" hstore[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140106212305')  [["version", "20140106212305"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddDeployerToDeploys (20140114014144)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "deploys" ADD "deployer" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140114014144')  [["version", "20140114014144"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to DropTableUserNotifications (20140217150735)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mDROP TABLE "user_notifications"[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140217150735')  [["version", "20140217150735"]]
+  [1m[36m (1.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddEmailAddressesToUsers (20140217160450)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "users" ADD "email_addresses" text[][0m
+  [1m[35m (1.3ms)[0m  CREATE  INDEX  "index_users_on_email_addresses" ON "users"  ("email_addresses")
+  [1m[36mUser Load (0.7ms)[0m  [1mSELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140217160450')  [["version", "20140217160450"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddPrerequisitesToTickets (20140217195942)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tickets" ADD "prerequisites" integer[][0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140217195942')  [["version", "20140217195942"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to DropTicketPrerequisites (20140327020121)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.0ms)[0m  [1mDROP TABLE "ticket_prerequisites"[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140327020121')  [["version", "20140327020121"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to AddIndexToTicketQueues (20140401234330)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.8ms)[0m  [1mCREATE  INDEX  "index_ticket_queues_on_ticket_id" ON "ticket_queues"  ("ticket_id")[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_ticket_queues_on_queue" ON "ticket_queues"  ("queue")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140401234330')[0m  [["version", "20140401234330"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to RemoveNewRelicIdFromProjects (20140406183224)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" DROP "new_relic_id"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140406183224')[0m  [["version", "20140406183224"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to DeleteAutomaticallyGeneratedMessagesForReleases (20140406230121)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mRelease Load (0.6ms)[0m  SELECT  "releases".* FROM "releases" WHERE ("releases"."message" != '')  ORDER BY "releases"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140406230121')[0m  [["version", "20140406230121"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to DropSprintsProjectId (20140407010111)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "sprints" DROP "project_id"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140407010111')[0m  [["version", "20140407010111"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddInvitationCreatedAtToUser (20140411214022)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "users" ADD "invitation_created_at" timestamp
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140411214022')[0m  [["version", "20140411214022"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to ChangeTicketAntecedentsToTextArray (20140418133005)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (8.0ms)[0m  ALTER TABLE "tickets" ALTER COLUMN "antecedents" TYPE text[]
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140418133005')[0m  [["version", "20140418133005"]]
+  [1m[35m (5.1ms)[0m  COMMIT
+Migrating to AddGemnasiumSlugToProjects (20140419152214)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ADD "gemnasium_slug" character varying
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140419152214')[0m  [["version", "20140419152214"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to EmbedChangesInReleases (20140425141946)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "releases" ADD "release_changes" text
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mRelease Load (0.4ms)[0m  [1mSELECT  "releases".* FROM "releases"  ORDER BY "releases"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140425141946')  [["version", "20140425141946"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to PreventReleaseChangesFromBeingNull (20140427235508)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "releases" ALTER COLUMN "release_changes" SET DEFAULT ''[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "releases" ALTER "release_changes" SET NOT NULL
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140427235508')[0m  [["version", "20140427235508"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to PreventTicketNumberFromBeingNull (20140428023146)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "tickets" ALTER "number" SET NOT NULL
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140428023146')[0m  [["version", "20140428023146"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddFeatureStatesToProjects (20140429000919)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "projects" ADD "feature_states" hstore
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140429000919')[0m  [["version", "20140429000919"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddLockedToSprints (20140506032958)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (2.8ms)[0m  ALTER TABLE "sprints" ADD "locked" boolean DEFAULT 'f' NOT NULL
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140506032958')[0m  [["version", "20140506032958"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+Migrating to CreateValueStatements (20140506035755)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (5.3ms)[0m  CREATE TABLE "value_statements" ("id" serial primary key, "project_id" integer NOT NULL, "weight" float NOT NULL, "text" character varying NOT NULL) 
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140506035755')[0m  [["version", "20140506035755"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to RenameTestingNotesUnfuddleIdToRemoteId (20140511024021)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "testing_notes" RENAME COLUMN "unfuddle_id" TO "remote_id"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140511024021')[0m  [["version", "20140511024021"]]
+  [1m[35m (0.2ms)[0m  COMMIT
+Migrating to CreateTasks (20140515174322)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (3.9ms)[0m  CREATE TABLE "tasks" ("id" serial primary key, "ticket_id" integer NOT NULL, "number" integer NOT NULL, "description" character varying NOT NULL, "effort" decimal(6,2), "first_release_at" timestamp, "first_commit_at" timestamp, "sprint_id" integer, "checked_out_at" timestamp, "checked_out_by_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.0ms)[0m  [1mCREATE UNIQUE INDEX  "index_tasks_on_ticket_id_and_number" ON "tasks"  ("ticket_id", "number")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140515174322')  [["version", "20140515174322"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to LinkTasksAndCommits (20140515200824)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "commits_tasks" ("commit_id" integer, "task_id" integer) [0m
+  [1m[35m (1.3ms)[0m  CREATE UNIQUE INDEX  "index_commits_tasks_on_commit_id_and_task_id" ON "commits_tasks"  ("commit_id", "task_id")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140515200824')[0m  [["version", "20140515200824"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to LinkTasksAndReleases (20140516005310)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.1ms)[0m  CREATE TABLE "releases_tasks" ("release_id" integer, "task_id" integer) 
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX  "index_releases_tasks_on_release_id_and_task_id" ON "releases_tasks"  ("release_id", "task_id")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140516005310')  [["version", "20140516005310"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTasksForExistingTickets (20140516012049)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mSELECT COUNT(*) FROM "tickets" WHERE "tickets"."destroyed_at" IS NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mTicket Load (0.5ms)[0m  SELECT  "tickets".* FROM "tickets" WHERE "tickets"."destroyed_at" IS NULL  ORDER BY "tickets"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140516012049')[0m  [["version", "20140516012049"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to PreventHstoreFieldsFromBeingNull (20140517012626)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "milestones" ALTER COLUMN "extended_attributes" TYPE hstore
+  [1m[36m (0.7ms)[0m  [1mALTER TABLE "milestones" ALTER COLUMN "extended_attributes" SET DEFAULT ''[0m
+  [1m[35m (0.6ms)[0m  UPDATE "milestones" SET "extended_attributes"='' WHERE "extended_attributes" IS NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "milestones" ALTER "extended_attributes" SET NOT NULL[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ALTER COLUMN "extended_attributes" TYPE hstore
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ALTER COLUMN "extended_attributes" SET DEFAULT ''[0m
+  [1m[35m (0.4ms)[0m  UPDATE "projects" SET "extended_attributes"='' WHERE "extended_attributes" IS NULL
+  [1m[36m (1.5ms)[0m  [1mALTER TABLE "projects" ALTER "extended_attributes" SET NOT NULL[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ALTER COLUMN "view_options" TYPE hstore
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ALTER COLUMN "view_options" SET DEFAULT ''[0m
+  [1m[35m (0.3ms)[0m  UPDATE "projects" SET "view_options"='' WHERE "view_options" IS NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ALTER "view_options" SET NOT NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" ALTER COLUMN "feature_states" TYPE hstore
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ALTER COLUMN "feature_states" SET DEFAULT ''[0m
+  [1m[35m (0.3ms)[0m  UPDATE "projects" SET "feature_states"='' WHERE "feature_states" IS NULL
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "projects" ALTER "feature_states" SET NOT NULL[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "tickets" ALTER COLUMN "extended_attributes" TYPE hstore
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tickets" ALTER COLUMN "extended_attributes" SET DEFAULT ''[0m
+  [1m[35m (0.4ms)[0m  UPDATE "tickets" SET "extended_attributes"='' WHERE "extended_attributes" IS NULL
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "tickets" ALTER "extended_attributes" SET NOT NULL[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ALTER COLUMN "view_options" TYPE hstore
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" ALTER COLUMN "view_options" SET DEFAULT ''[0m
+  [1m[35m (0.7ms)[0m  UPDATE "users" SET "view_options"='' WHERE "view_options" IS NULL
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "users" ALTER "view_options" SET NOT NULL[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140517012626')  [["version", "20140517012626"]]
+  [1m[36m (0.7ms)[0m  [1mCOMMIT[0m
+Migrating to AllowTaskDescriptionsToBeNull (20140521014652)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tasks" ALTER "description" DROP NOT NULL[0m
+  [1m[35mSQL (2.0ms)[0m  UPDATE "tasks" SET "description" = NULL WHERE "tasks"."id" IN (SELECT "tasks"."id" FROM "tasks" WHERE "tasks"."number" = 1  ORDER BY "tasks"."number" ASC)  [["number", 1]]
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140521014652')[0m  [["version", "20140521014652"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddCommitIdToDeploys (20140526155845)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "deploys" ADD "commit_id" integer
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "deploys"[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mProject Load (1.1ms)[0m  SELECT  "projects".* FROM "projects" WHERE "projects"."retired_at" IS NULL  ORDER BY "projects"."id" ASC LIMIT 1000
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "deploys"[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mDeploy Load (0.4ms)[0m  SELECT  "deploys".* FROM "deploys"  ORDER BY "deploys"."id" ASC LIMIT 1000
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "deploys" WHERE "deploys"."commit_id" IS NULL[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "deploys"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140526155845')[0m  [["version", "20140526155845"]]
+  [1m[35m (3.9ms)[0m  COMMIT
+Migrating to AddCommitBeforeIdAndCommitAfterIdToReleases (20140526162645)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "releases" ADD "commit_before_id" integer
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "releases" ADD "commit_after_id" integer[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "releases"
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mRelease Load (0.5ms)[0m  [1mSELECT  "releases".* FROM "releases"  ORDER BY "releases"."id" ASC LIMIT 1000[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "releases" WHERE "releases"."commit_before_id" IS NULL
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "releases"[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "releases" WHERE "releases"."commit_after_id" IS NULL
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "releases"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140526162645')  [["version", "20140526162645"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AssociateRemainingDeploysAndReleases (20140526180608)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "deploys" WHERE "deploys"."commit_id" IS NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mDeploy Load (0.4ms)[0m  SELECT  "deploys".* FROM "deploys" WHERE "deploys"."commit_id" IS NULL  ORDER BY "deploys"."id" ASC LIMIT 1000
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "releases" WHERE "releases"."commit_before_id" IS NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mRelease Load (0.5ms)[0m  SELECT  "releases".* FROM "releases" WHERE "releases"."commit_before_id" IS NULL  ORDER BY "releases"."id" ASC LIMIT 1000
+  [1m[36m (0.5ms)[0m  [1mSELECT COUNT(*) FROM "releases" WHERE "releases"."commit_after_id" IS NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mRelease Load (0.6ms)[0m  SELECT  "releases".* FROM "releases" WHERE "releases"."commit_after_id" IS NULL  ORDER BY "releases"."id" ASC LIMIT 1000
+  [1m[36m (0.6ms)[0m  [1mSELECT COUNT(*) FROM "deploys" WHERE "deploys"."commit_id" IS NULL[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "deploys"
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "releases" WHERE "releases"."commit_before_id" IS NULL[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "releases"
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "releases" WHERE "releases"."commit_after_id" IS NULL[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "releases"
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140526180608')[0m  [["version", "20140526180608"]]
+  [1m[35m (0.7ms)[0m  COMMIT
+Migrating to CreateVestalVersions (20140606232907)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[35m (4.0ms)[0m  CREATE TABLE "versions" ("id" serial primary key, "versioned_id" integer, "versioned_type" character varying, "user_id" integer, "user_type" character varying, "user_name" character varying, "modifications" text, "number" integer, "reverted_from" integer, "tag" character varying, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.0ms)[0m  [1mCREATE  INDEX  "index_versions_on_versioned_id_and_versioned_type" ON "versions"  ("versioned_id", "versioned_type")[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_versions_on_user_id_and_user_type" ON "versions"  ("user_id", "user_type")
+  [1m[36m (1.5ms)[0m  [1mCREATE  INDEX  "index_versions_on_user_name" ON "versions"  ("user_name")[0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX  "index_versions_on_number" ON "versions"  ("number")
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_versions_on_tag" ON "versions"  ("tag")[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_versions_on_created_at" ON "versions"  ("created_at")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140606232907')[0m  [["version", "20140606232907"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateSprintsTasks (20140724231918)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.8ms)[0m  CREATE TABLE "sprints_tasks" ("sprint_id" integer NOT NULL, "task_id" integer NOT NULL) 
+  [1m[36m (5.3ms)[0m  [1mCREATE UNIQUE INDEX  "index_sprints_tasks_on_sprint_id_and_task_id" ON "sprints_tasks"  ("sprint_id", "task_id")[0m
+  [1m[35m (0.5ms)[0m  SELECT "tasks"."id", "tasks"."sprint_id" FROM "tasks" WHERE ("tasks"."sprint_id" IS NOT NULL)  ORDER BY "tasks"."number" ASC
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "sprints_tasks"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140724231918')  [["version", "20140724231918"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddPositionToMilestones (20140806233301)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "milestones" ADD "position" integer[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140806233301')  [["version", "20140806233301"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddSizeAndUnitsToMilestones (20140810224209)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "milestones" ADD "size" integer[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "milestones" ADD "units" character varying
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "milestones" ADD "start_date" date[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140810224209')  [["version", "20140810224209"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddProjectIdToTasks (20140824194031)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "tasks" ADD "project_id" integer[0m
+  [1m[35m (0.6ms)[0m  UPDATE tasks SET project_id=tickets.project_id FROM tickets WHERE ticket_id=tickets.id
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "tasks" ALTER "project_id" SET NOT NULL[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140824194031')  [["version", "20140824194031"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddCompletedAtToTasks (20140824194526)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "tasks" ADD "completed_at" timestamp[0m
+  [1m[35mSQL (0.9ms)[0m  UPDATE "tasks" SET completed_at=first_commit_at WHERE "tasks"."id" IN (SELECT "tasks"."id" FROM "tasks" INNER JOIN "projects" ON "projects"."id" = "tasks"."project_id" WHERE "projects"."category" = 'Libraries' AND ("tasks"."first_commit_at" IS NOT NULL)  ORDER BY "tasks"."number" ASC)
+  [1m[36mSQL (0.7ms)[0m  [1mUPDATE "tasks" SET completed_at=first_release_at WHERE "tasks"."id" IN (SELECT "tasks"."id" FROM "tasks" INNER JOIN "projects" ON "projects"."id" = "tasks"."project_id" WHERE ("projects"."category" != 'Libraries') AND ("tasks"."first_release_at" IS NOT NULL)  ORDER BY "tasks"."number" ASC)[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140824194526')  [["version", "20140824194526"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to RequireSprintsToBeUnique (20140824211249)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX  "index_sprints_on_end_date" ON "sprints"  ("end_date")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140824211249')  [["version", "20140824211249"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to DropTableChanges (20140907012329)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mDROP TABLE "changes"[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140907012329')  [["version", "20140907012329"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to DropTableErrors (20140907013836)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mDROP TABLE "errors"[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140907013836')  [["version", "20140907013836"]]
+  [1m[36m (0.8ms)[0m  [1mCOMMIT[0m
+Migrating to AddCheckedOutToSprintsTasks (20140921190022)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "sprints_tasks" ADD "checked_out_at" timestamp[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "sprints_tasks" ADD "checked_out_by_id" integer
+  [1m[36m (0.5ms)[0m  [1m      UPDATE sprints_tasks
+        SET checked_out_at=tasks.checked_out_at,
+            checked_out_by_id=tasks.checked_out_by_id
+        FROM tasks
+        WHERE sprints_tasks.task_id=tasks.id
+[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140921190022')  [["version", "20140921190022"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to DropUsersName (20140921201441)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" DROP "name"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140921201441')  [["version", "20140921201441"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to RenameDeploysCommitToSha (20140925021043)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "deploys" RENAME COLUMN "commit" TO "sha"[0m
+  [1m[35m (0.6ms)[0m        UPDATE deploys
+         SET sha=commits.sha
+        FROM commits
+       WHERE deploys.commit_id=commits.id
+
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "deploys" ALTER "sha" SET NOT NULL[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20140925021043')  [["version", "20140925021043"]]
+  [1m[36m (0.6ms)[0m  [1mCOMMIT[0m
+Migrating to CreateHistoricalHeads (20140929004347)
+  [1m[35m (0.3ms)[0m  BEGIN
+DEPRECATION WARNING: `#timestamps` was called without specifying an option for `null`. In Rails 5, this behavior will change to `null: false`. You should manually specify `null: true` to prevent the behavior of your existing migrations from changing. (called from measure at /opt/rubies/2.1.2/lib/ruby/2.1.0/benchmark.rb:279)
+  [1m[36m (4.1ms)[0m  [1mCREATE TABLE "historical_heads" ("id" serial primary key, "project_id" integer NOT NULL, "branches" hstore DEFAULT '' NOT NULL, "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35mProject Load (0.4ms)[0m  SELECT "projects".* FROM "projects" WHERE "projects"."retired_at" IS NULL AND ("projects"."version_control_name" != 'None')  ORDER BY "projects"."name" ASC
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20140929004347')[0m  [["version", "20140929004347"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to MakeUsersEnvironmentsSubscribedToAnArray (20141027194819)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.0ms)[0m  ALTER TABLE "users" RENAME COLUMN "environments_subscribed_to" TO "old_environments_subscribed_to"
+  [1m[36m (7.7ms)[0m  [1mALTER TABLE "users" ADD "environments_subscribed_to" text[] DEFAULT '{}' NOT NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mUser Load (1.8ms)[0m  SELECT  "users".* FROM "users"  ORDER BY "users"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20141027194819')[0m  [["version", "20141027194819"]]
+  [1m[35m (1.2ms)[0m  COMMIT
+Migrating to AddDurationToDeploys (20141202004123)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "deploys" ADD "duration" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20141202004123')[0m  [["version", "20141202004123"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateMeasurements (20141226171730)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (3.8ms)[0m  CREATE TABLE "measurements" ("id" serial primary key, "subject_type" character varying, "subject_id" integer, "name" character varying NOT NULL, "value" character varying NOT NULL, "taken_at" timestamp NOT NULL, "taken_on" date NOT NULL) 
+  [1m[36m (1.3ms)[0m  [1mCREATE  INDEX  "index_measurements_on_subject_type_and_subject_id" ON "measurements"  ("subject_type", "subject_id")[0m
+  [1m[35m (2.0ms)[0m  CREATE  INDEX  "index_measurements_on_name" ON "measurements"  ("name")
+  [1m[36m (1.1ms)[0m  [1mCREATE  INDEX  "index_measurements_on_taken_on" ON "measurements"  ("taken_on")[0m
+  [1m[35m (1.0ms)[0m  CREATE  INDEX  "index_measurements_on_taken_at" ON "measurements"  ("taken_at")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20141226171730')[0m  [["version", "20141226171730"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddTimestampsToMeasurements (20150116153233)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "measurements" ADD "created_at" timestamp
+  [1m[36m (0.2ms)[0m  [1mALTER TABLE "measurements" ADD "updated_at" timestamp[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150116153233')  [["version", "20150116153233"]]
+  [1m[36m (1.6ms)[0m  [1mCOMMIT[0m
+Migrating to DropUnusedFieldsFromMilestones (20150119154013)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "milestones" DROP "size"[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "milestones" DROP "units"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "milestones" DROP "position"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150119154013')  [["version", "20150119154013"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddBranchToDeploys (20150220215154)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "deploys" ADD "branch" character varying[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150220215154')  [["version", "20150220215154"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddFeaturesToProjects (20150222205616)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ADD "selected_features" text[][0m
+  [1m[35mSQL (0.7ms)[0m  UPDATE "projects" SET "selected_features" = '{ideas,bugs,testing,releases,settings}' WHERE "projects"."id" IN (SELECT "projects"."id" FROM "projects"  ORDER BY "projects"."name" ASC)
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150222205616')[0m  [["version", "20150222205616"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddCurrentProjectToUsers (20150222214124)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ADD "current_project_id" integer
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150222214124')[0m  [["version", "20150222214124"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddNicknameToUsers (20150223013721)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ADD "nickname" character varying
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150223013721')[0m  [["version", "20150223013721"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddUsernameToUsers (20150302153319)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ADD "username" character varying
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150302153319')[0m  [["version", "20150302153319"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddDeploysCompletedAt (20150323004452)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "deploys" ADD "completed_at" timestamp
+  [1m[36m (0.5ms)[0m  [1mUPDATE deploys SET completed_at=created_at[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150323004452')  [["version", "20150323004452"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddOutputToDeploy (20150323011050)
+  [1m[35m (0.4ms)[0m  BEGIN
+  [1m[36m (0.8ms)[0m  [1mALTER TABLE "deploys" ADD "output" text[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150323011050')  [["version", "20150323011050"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to AddCommitIdToTestRuns (20150805180939)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "test_runs" ADD "commit_id" integer[0m
+  [1m[35m (0.5ms)[0m  SELECT DISTINCT project_id FROM "test_runs"
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "projects" WHERE "projects"."retired_at" IS NULL AND 1=0[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mProject Load (1.0ms)[0m  SELECT  "projects".* FROM "projects" WHERE "projects"."retired_at" IS NULL AND 1=0  ORDER BY "projects"."id" ASC LIMIT 1000
+  [1m[36m (0.8ms)[0m  [1mSELECT COUNT(*) FROM "test_runs"[0m
+  [1m[35m (0.5ms)[0m  SELECT "test_runs"."project_id", "test_runs"."sha", "test_runs"."id" FROM "test_runs"  ORDER BY completed_at DESC
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "test_runs" WHERE "test_runs"."commit_id" IS NULL[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "test_runs"
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150805180939')[0m  [["version", "20150805180939"]]
+  [1m[35m (0.5ms)[0m  COMMIT
+Migrating to AddUserIdToTestRuns (20150805233946)
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.5ms)[0m  ALTER TABLE "test_runs" ADD "user_id" integer
+  [1m[36m (0.4ms)[0m  [1mSELECT DISTINCT agent_email FROM "test_runs"[0m
+  [1m[35m (0.3ms)[0m  SELECT COUNT(*) FROM "test_runs"
+  [1m[36m (0.5ms)[0m  [1mSELECT "test_runs"."agent_email", "test_runs"."id" FROM "test_runs"  ORDER BY completed_at DESC[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150805233946')  [["version", "20150805233946"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTests (20150806032230)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (3.6ms)[0m  [1mCREATE TABLE "tests" ("id" serial primary key, "project_id" integer NOT NULL, "suite" character varying NOT NULL, "name" text NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE  INDEX  "index_tests_on_project_id" ON "tests"  ("project_id")
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE tests ADD CONSTRAINT tests_unique_constraint UNIQUE (project_id, suite, name)[0m
+  [1m[35m (0.4ms)[0m  SELECT DISTINCT project_id FROM "test_runs" WHERE ("test_runs"."completed_at" IS NOT NULL)
+  [1m[36m (0.3ms)[0m  [1mSELECT COUNT(*) FROM "test_runs" WHERE ("test_runs"."completed_at" IS NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150806032230')  [["version", "20150806032230"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to CreateTestErrors (20150808161729)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "test_errors" ("id" serial primary key, "sha" character varying, "output" text) [0m
+  [1m[35m (1.1ms)[0m  CREATE UNIQUE INDEX  "index_test_errors_on_sha" ON "test_errors"  ("sha")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150808161729')[0m  [["version", "20150808161729"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to CreateTestResults (20150808161805)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.6ms)[0m  CREATE TYPE test_result_status AS ENUM ('fail', 'skip', 'pass')
+  [1m[36m (7.7ms)[0m  [1mCREATE TABLE "test_results" ("id" serial primary key, "test_run_id" integer NOT NULL, "test_id" integer NOT NULL, "status" test_result_status NOT NULL, "regression" boolean, "duration" float, "error_id" integer) [0m
+  [1m[35m (1.1ms)[0m  CREATE  INDEX  "index_test_results_on_test_run_id" ON "test_results"  ("test_run_id")
+  [1m[36m (0.9ms)[0m  [1mCREATE  INDEX  "index_test_results_on_test_id" ON "test_results"  ("test_id")[0m
+  [1m[35m (1.0ms)[0m  ALTER TABLE test_results ADD CONSTRAINT test_results_unique_constraint UNIQUE (test_run_id, test_id)
+  [1m[36m (0.4ms)[0m  [1mSELECT "test_errors"."sha", "test_errors"."id" FROM "test_errors"[0m
+  [1m[35m (0.3ms)[0m  SELECT DISTINCT project_id FROM "test_runs" WHERE ("test_runs"."completed_at" IS NOT NULL)
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "test_runs" WHERE ("test_runs"."completed_at" IS NOT NULL)[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150808161805')  [["version", "20150808161805"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to IndexTestRunsOnCommitId (20150808162928)
+  [1m[35m (0.3ms)[0m  BEGIN
+  [1m[36m (2.0ms)[0m  [1mCREATE UNIQUE INDEX  "index_test_runs_on_commit_id" ON "test_runs"  ("commit_id")[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150808162928')  [["version", "20150808162928"]]
+  [1m[36m (0.5ms)[0m  [1mCOMMIT[0m
+Migrating to IndexCommitsOnSha (20150808192103)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX  "index_commits_on_sha" ON "commits"  ("sha")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150808192103')  [["version", "20150808192103"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddParentShaToCommits (20150808193354)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "commits" ADD "parent_sha" character varying[0m
+  [1m[35m (1.0ms)[0m  SELECT DISTINCT project_id FROM "commits" WHERE "commits"."unreachable" = 'f'
+  [1m[36mProject Load (0.4ms)[0m  [1mSELECT "projects".* FROM "projects" WHERE "projects"."retired_at" IS NULL AND 1=0  ORDER BY "projects"."name" ASC[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "commits" WHERE "commits"."unreachable" = 'f' AND 1=0
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150808193354')[0m  [["version", "20150808193354"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to RenameTestResultsRegressionToDifference (20150809132417)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "test_results" RENAME COLUMN "regression" TO "different"
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "test_results" ADD "new_test" boolean[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150809132417')  [["version", "20150809132417"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddComparedToTestRuns (20150809201942)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (7.5ms)[0m  [1mALTER TABLE "test_runs" ADD "compared" boolean DEFAULT 'f' NOT NULL[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150809201942')  [["version", "20150809201942"]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+Migrating to CreatePullRequests (20150817232311)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (3.8ms)[0m  [1mCREATE TABLE "pull_requests" ("id" serial primary key, "project_id" integer NOT NULL, "user_id" integer, "title" character varying NOT NULL, "number" integer NOT NULL, "repo" character varying NOT NULL, "username" character varying NOT NULL, "url" character varying NOT NULL, "base_ref" character varying NOT NULL, "base_sha" character varying NOT NULL, "head_ref" character varying NOT NULL, "head_sha" character varying NOT NULL) [0m
+  [1m[35m (1.6ms)[0m  CREATE  INDEX  "index_pull_requests_on_project_id" ON "pull_requests"  ("project_id")
+  [1m[36m (4.0ms)[0m  [1mCREATE TABLE "commits_pull_requests" ("commit_id" integer, "pull_request_id" integer) [0m
+  [1m[35m (1.1ms)[0m  CREATE UNIQUE INDEX  "index_commits_pull_requests_on_commit_id_and_pull_request_id" ON "commits_pull_requests"  ("commit_id", "pull_request_id")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150817232311')[0m  [["version", "20150817232311"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to AddLabelsToPullRequests (20150820023708)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (4.7ms)[0m  ALTER TABLE "pull_requests" ADD "labels" text DEFAULT '' NOT NULL
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150820023708')[0m  [["version", "20150820023708"]]
+  [1m[35m (0.8ms)[0m  COMMIT
+Migrating to DowncaseEnvironmentNames (20150902005758)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "deploys"
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mDeploy Load (0.4ms)[0m  [1mSELECT  "deploys".* FROM "deploys"  ORDER BY "deploys"."id" ASC LIMIT 1000[0m
+  [1m[35m (0.4ms)[0m  SELECT COUNT(*) FROM "releases"
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[36mRelease Load (0.6ms)[0m  [1mSELECT  "releases".* FROM "releases"  ORDER BY "releases"."id" ASC LIMIT 1000[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150902005758')  [["version", "20150902005758"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to AddUserIdToDeploys (20150902010629)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "deploys" ADD "user_id" integer[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150902010629')  [["version", "20150902010629"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to PopulateDeploysUser (20150902010853)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "deploys" WHERE (deployer IS NOT NULL)[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mDeploy Load (1.0ms)[0m  SELECT  "deploys".* FROM "deploys" WHERE (deployer IS NOT NULL)  ORDER BY "deploys"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20150902010853')[0m  [["version", "20150902010853"]]
+  [1m[35m (0.4ms)[0m  COMMIT
+Migrating to RequiredPullRequestsToBeUniqueByProjectAndNumber (20150927014445)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.9ms)[0m  select max(id) from pull_requests group by project_id, number having count(id) > 1
+  [1m[36m (1.1ms)[0m  [1mCREATE UNIQUE INDEX  "index_pull_requests_on_project_id_and_number" ON "pull_requests"  ("project_id", "number")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20150927014445')  [["version", "20150927014445"]]
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+Migrating to ConvertPullRequestLabelsToArray (20151108221505)
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "pull_requests" RENAME COLUMN "labels" TO "old_labels"[0m
+  [1m[35m (5.9ms)[0m  ALTER TABLE "pull_requests" ADD "labels" text[] DEFAULT '{}'
+  [1m[36m (0.6ms)[0m  [1mSELECT "pull_requests"."id", "pull_requests"."old_labels" FROM "pull_requests"[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20151108221505')  [["version", "20151108221505"]]
+  [1m[36m (2.1ms)[0m  [1mCOMMIT[0m
+Migrating to SyncBodyAlsoForPullRequests (20151108223154)
+  [1m[35m (1.2ms)[0m  BEGIN
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "pull_requests" ADD "body" text[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20151108223154')  [["version", "20151108223154"]]
+  [1m[36m (0.4ms)[0m  [1mCOMMIT[0m
+Migrating to AddPropsToPullRequests (20151108233510)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (5.5ms)[0m  [1mALTER TABLE "pull_requests" ADD "props" jsonb DEFAULT '{}'[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20151108233510')  [["version", "20151108233510"]]
+  [1m[36m (1.0ms)[0m  [1mCOMMIT[0m
+Migrating to RequireProjectsToHaveNameAndSlug (20151201042126)
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "projects" ALTER "name" SET NOT NULL[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "projects" ALTER "slug" SET NOT NULL
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20151201042126')[0m  [["version", "20151201042126"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddHeadShaToProjects (20151202005557)
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "projects" ADD "head_sha" character varying
+  [1m[36m (0.4ms)[0m  [1mSELECT COUNT(*) FROM "projects" WHERE "projects"."retired_at" IS NULL[0m
+Scoped order and limit are ignored, it's forced to be batch order and batch size
+  [1m[35mProject Load (0.6ms)[0m  SELECT  "projects".* FROM "projects" WHERE "projects"."retired_at" IS NULL  ORDER BY "projects"."id" ASC LIMIT 1000
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20151202005557')[0m  [["version", "20151202005557"]]
+  [1m[35m (0.6ms)[0m  COMMIT
+Migrating to RequireProjectsToHaveColor (20151202011812)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  UPDATE projects SET color='default' WHERE color IS NULL
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "projects" ALTER COLUMN "color" SET DEFAULT 'default'[0m
+  [1m[35m (0.2ms)[0m  ALTER TABLE "projects" ALTER "color" SET NOT NULL
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20151202011812')[0m  [["version", "20151202011812"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to RequireProjectSlugsToBeUnique (20151205204922)
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX  "index_projects_on_slug" ON "projects"  ("slug")
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20151205204922')[0m  [["version", "20151205204922"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddAvatarUrlToPullRequests (20151205214647)
+  [1m[36m (1.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "pull_requests" ADD "avatar_url" character varying
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20151205214647')[0m  [["version", "20151205214647"]]
+  [1m[35m (0.3ms)[0m  COMMIT
+Migrating to AddJsonLabelsToPullRequests (20151209004458)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (9.3ms)[0m  ALTER TABLE "pull_requests" ADD "json_labels" jsonb DEFAULT '[]'
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES ('20151209004458')[0m  [["version", "20151209004458"]]
+  [1m[35m (1.0ms)[0m  COMMIT
+Migrating to AddTimestampsToPullRequests (20151209030113)
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "pull_requests" ADD "created_at" timestamp
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "pull_requests" ADD "updated_at" timestamp[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES ('20151209030113')  [["version", "20151209030113"]]
+  [1m[36m (0.2ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"  ORDER BY version

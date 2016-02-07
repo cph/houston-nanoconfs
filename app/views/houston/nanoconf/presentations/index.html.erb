@@ -1,1 +1,25 @@
-<h1>heyyyy</h1>
+<% content_for :title do %>
+<h1 class="project-banner space-below">
+  Upcoming Presentations
+</h1>
+<% end %>
+
+<div id="presentation-list">
+  <% @presentations.each do |presentation| %>
+    <div class="presentation">
+      <h4><%= presentation.date.strftime("%b %d") %></h4>
+      <% if presentation.title %>
+        <div class="presentation-info">
+          <h3 class="presentation-title">
+            <a href="/nanoconfs/<%= presentation.id %>">
+              <%= presentation.title %>
+            </a>
+          </h3>
+          <p class="presenter-info">By: <%= presentation.presenter.name %> <%= avatar_for(presentation.presenter) %></p>
+        </div>
+      <% else %>
+        <h5 class="signup-link"><a href="/nanoconfs/<%= presentation.id %>/edit">Sign Up to Present!</a></h5>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,4 @@
+<%= form_for @presentation, url: {action: "edit"} do |f| %>
+   <%= f.text_field :title, placeholder: "Title" %>
+   <%= f.text_area :description, placeholder: "Description", rows: 10 %>
+<% end %>

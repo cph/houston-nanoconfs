@@ -13,7 +13,7 @@ And in `config/main.rb`, add:
 
 ```ruby
 use :nanoconf do
-  # TODO: specify configuration options for Houston::Nanoconf here
+  officer "john.doe@example.com"
 end
 ```
 

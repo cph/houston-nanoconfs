@@ -1,4 +1,4 @@
-Houston::Nanoconf::Engine.routes.draw do
+Houston::Nanoconfs::Engine.routes.draw do
 
   scope "nanoconfs" do
     get "", to: "presentations#index", as: "presentations"

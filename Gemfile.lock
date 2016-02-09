@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    houston-nanoconf (0.0.1)
+    houston-nanoconfs (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -343,7 +343,7 @@ DEPENDENCIES
   bundler (~> 1.11.2)
   capybara
   houston-core (>= 0.5.3)
-  houston-nanoconf!
+  houston-nanoconfs!
   minitest
   minitest-reporters
   minitest-reporters-turn_reporter

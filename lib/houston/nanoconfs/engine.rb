@@ -1,15 +1,15 @@
-require "houston/nanoconf/railtie"
+require "houston/nanoconfs/railtie"
 
 module Houston
-  module Nanoconf
+  module Nanoconfs
     class Engine < ::Rails::Engine
-      isolate_namespace Houston::Nanoconf
+      isolate_namespace Houston::Nanoconfs
 
       # Precompile this modules assets
       initializer :assets do |config|
         Rails.application.config.assets.precompile += %w(
-          houston/nanoconf/application.js
-          houston/nanoconf/application.css )
+          houston/nanoconfs/application.js
+          houston/nanoconfs/application.css )
       end
 
       # Include the Engine's migrations with the Application

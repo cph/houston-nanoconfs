@@ -1,4 +1,4 @@
-module Houston::Nanoconf
+module Houston::Nanoconfs
   module ApplicationHelper
   end
 end

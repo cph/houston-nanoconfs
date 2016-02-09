@@ -1,4 +1,4 @@
-module Houston::Nanoconf
+module Houston::Nanoconfs
   class Presentation < ActiveRecord::Base
 
     self.table_name = "presentations"

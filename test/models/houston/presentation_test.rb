@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Houston::Nanoconf
+module Houston::Nanoconfs
   class PresentationTest < ActiveSupport::TestCase
     # test "the truth" do
     #   assert true

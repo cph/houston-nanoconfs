@@ -1,5 +1,5 @@
 module Houston
-  module Nanoconf
+  module Nanoconfs
     class Railtie < ::Rails::Railtie
 
       # The block you pass to this method will run for every request

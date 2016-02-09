@@ -1,12 +1,12 @@
-require "houston/nanoconf/engine"
-require "houston/nanoconf/configuration"
+require "houston/nanoconfs/engine"
+require "houston/nanoconfs/configuration"
 
 module Houston
-  module Nanoconf
+  module Nanoconfs
     extend self
 
     def config(&block)
-      @configuration ||= Nanoconf::Configuration.new
+      @configuration ||= Nanoconfs::Configuration.new
       @configuration.instance_eval(&block) if block_given?
       @configuration
     end

@@ -1,4 +1,4 @@
-# Houston::Nanoconf
+# Houston::Nanoconfs
 
 TODO: Summary of Houston Nanoconf.
 
@@ -12,7 +12,7 @@ In your `Gemfile`, add:
 And in `config/main.rb`, add:
 
 ```ruby
-use :nanoconf do
+use :nanoconfs do
   officer "john.doe@example.com"
 end
 ```

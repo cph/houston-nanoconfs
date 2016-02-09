@@ -1,15 +1,15 @@
 module Houston
-  module Nanoconf
+  module Nanoconfs
     class PresentationsController < ApplicationController
       before_action :set_presentation, only: [:show, :edit]
       before_action :authenticate_presenter, only: [:edit]
 
       attr_reader :presentation
 
-      layout "houston/nanoconf/application"
+      layout "houston/nanoconfs/application"
 
       def index
-        @presentations = Houston::Nanoconf::Presentation.where(date: next_six_months).order(:date)
+        @presentations = Houston::Nanoconfs::Presentation.where(date: next_six_months).order(:date)
         create_new_nanoconfs if next_six_months.count > @presentations.count
       end
 
@@ -22,7 +22,7 @@ module Houston
       end
 
       def update
-        @presentation = Houston::Nanoconf::Presentation.find(params[:id])
+        @presentation = Houston::Nanoconfs::Presentation.find(params[:id])
         @presentation.presenter = current_user
 
         if presentation.update_attributes(presentation_params)
@@ -36,7 +36,7 @@ module Houston
     private
 
       def set_presentation
-        @presentation = Houston::Nanoconf::Presentation.find(params[:id])
+        @presentation = Houston::Nanoconfs::Presentation.find(params[:id])
       end
 
       def authenticate_presenter
@@ -55,7 +55,7 @@ module Houston
 
       def create_new_nanoconfs
         next_six_months.each do |friday|
-          Houston::Nanoconf::Presentation.find_or_create_by(date: friday)
+          Houston::Nanoconfs::Presentation.find_or_create_by(date: friday)
         end
       end
 
@@ -66,7 +66,7 @@ module Houston
       def can_edit_presentation?
         @presentation.presenter.nil? ||
         current_user == @presentation.presenter ||
-        current_user.email == Houston::Nanoconf.config.officer
+        current_user.email == Houston::Nanoconfs.config.officer
       end
     end
   end

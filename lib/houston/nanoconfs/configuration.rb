@@ -1,4 +1,4 @@
-module Houston::Nanoconf
+module Houston::Nanoconfs
   class Configuration
 
     def initialize

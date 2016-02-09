@@ -11,7 +11,7 @@
       <% if presentation.title %>
         <div class="presentation-info">
           <h3 class="presentation-title">
-            <a href="/nanoconfs/<%= presentation.id %>">
+            <a href="/nanoconfs//<%= presentation.id %>">
               <%= presentation.title %>
             </a>
           </h3>
@@ -22,7 +22,7 @@
           <% end %>
         </div>
       <% else %>
-        <h5 class="signup-link"><a href="/nanoconfs/<%= presentation.id %>/edit">Sign Up to Present!</a></h5>
+        <h5 class="signup-link"><a href="/nanoconfs//<%= presentation.id %>/edit">Sign Up to Present!</a></h5>
       <% end %>
     </div>
   <% end %>

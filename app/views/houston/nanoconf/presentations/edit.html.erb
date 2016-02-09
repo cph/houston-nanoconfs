@@ -1,48 +1,9 @@
 <div id="nanoconf-form">
-  <h1>Update Presentation</h1>
-
-
-  <%= form_for @presentation, :html => {class: "container-fluid", id: "edit-nanoconf-form"} do |f| %>
-    <div class="row-fluid">
-      <div class="span6 controls">
-        <%= f.text_field :title, placeholder: "Title" %>
-
-      </div>
-    </div>
-
-    <ul class="nav nav-tabs">
-      <li class="active">
-        <a href="#markdown" data-toggle="tab">
-          <p>Markdown</p>
-        </a>
-      </li>
-      <li>
-        <a href="#preview" data-toggle="tab">
-          <p>Preview</p>
-        </a>
-      </li>
-    </ul>
-
-    <div class="tab-content">
-      <div class="tab-pane active" id="markdown">
-        <div class="row-fluid">
-          <%= f.text_area :description, placeholder: "Description", id: "nanoconf-description", rows: 10 %>
-        </div>
-      </div>
-
-      <div class="tab-pane markdown-body" id="preview">
-        <h5>Nothing to Preview</h5>
-      </div>
-
-    </div>
-
-    <%= link_to "https://guides.github.com/features/mastering-markdown/", target: "_blank" do %>
-      <small>
-        <span class="octicon octicon-markdown"></span> Styling with Markdown is supported
-      </small>
-    <% end %>
-    <div class="buttons">
-      <%= submit_tag "Submit", class: "btn btn-primary" %>
-    </div>
+  <% if @presentation.presenter.nil? %>
+    <h1>Sign Up!</h1>
+  <% else %>
+    <h1>Update Presentation</h1>
   <% end %>
+
+  <%= render 'form' %>
 </div>

@@ -15,7 +15,11 @@
               <%= presentation.title %>
             </a>
           </h3>
-          <p class="presenter-info">By: <%= presentation.presenter.name %> <%= avatar_for(presentation.presenter) %></p>
+          <% if presentation.presenter == current_user %>
+            <%= link_to "Edit", edit_presentation_path(presentation) %>
+          <% else %>
+            <p class="presenter-info">By: <%= presentation.presenter.name %> <%= avatar_for(presentation.presenter) %></p>
+          <% end %>
         </div>
       <% else %>
         <h5 class="signup-link"><a href="/nanoconfs/<%= presentation.id %>/edit">Sign Up to Present!</a></h5>

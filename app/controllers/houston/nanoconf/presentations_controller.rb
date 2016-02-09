@@ -21,11 +21,11 @@ module Houston
 
       def update
         @presentation = Houston::Nanoconf::Presentation.find(params[:id])
-
-        attributes = params.pick(:title, :description)
         @presentation.presenter = current_user
-        if presentation.update_attributes(attributes)
+
+        if presentation.update_attributes(presentation_params)
           flash[:notice] = "Presentation Updated!"
+          Houston.observer.fire "nanoconf:update", @presentation
           redirect_to @presentation
         else
           flash_message[:error] = "There was a problem"
@@ -48,6 +48,10 @@ module Houston
         next_six_months.each do |friday|
           Houston::Nanoconf::Presentation.find_or_create_by(date: friday)
         end
+      end
+
+      def presentation_params
+        params.require(:presentation).permit(:title, :description)
       end
     end
   end

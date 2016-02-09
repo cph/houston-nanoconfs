@@ -1,10 +1,12 @@
 <div id="nanoconf-form">
   <h1>Update Presentation</h1>
 
-  <%= form_tag edit_presentation_path, method: :patch, id: "edit-nanoconf-form", class: "container-fluid" do %>
+
+  <%= form_for @presentation, :html => {class: "container-fluid", id: "edit-nanoconf-form"} do |f| %>
     <div class="row-fluid">
       <div class="span6 controls">
-        <%= text_field_tag :title, params[:title], placeholder: "Title" %>
+        <%= f.text_field :title, placeholder: "Title" %>
+
       </div>
     </div>
 
@@ -24,7 +26,7 @@
     <div class="tab-content">
       <div class="tab-pane active" id="markdown">
         <div class="row-fluid">
-          <%= text_area_tag :description, params[:description], id: "nanoconf-description", placeholder: "Description", rows: 10 %>
+          <%= f.text_area :description, placeholder: "Description", id: "nanoconf-description", rows: 10 %>
         </div>
       </div>
 

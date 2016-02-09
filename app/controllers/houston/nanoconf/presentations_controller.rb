@@ -2,6 +2,8 @@ module Houston
   module Nanoconf
     class PresentationsController < ApplicationController
       before_action :set_presentation, only: [:show, :edit]
+      before_action :authenticate_presenter, only: [:edit]
+
       attr_reader :presentation
 
       layout "houston/nanoconf/application"
@@ -28,13 +30,20 @@ module Houston
           Houston.observer.fire "nanoconf:update", @presentation
           redirect_to @presentation
         else
-          flash_message[:error] = "There was a problem"
+          flash[:error] = "There was a problem"
         end
       end
     private
 
       def set_presentation
         @presentation = Houston::Nanoconf::Presentation.find(params[:id])
+      end
+
+      def authenticate_presenter
+        unless can_edit_presentation?
+          flash[:error] = "You are not authorized to edit this presentation"
+          redirect_to presentations_path
+        end
       end
 
       def next_six_months
@@ -52,6 +61,12 @@ module Houston
 
       def presentation_params
         params.require(:presentation).permit(:title, :description)
+      end
+
+      def can_edit_presentation?
+        @presentation.presenter.nil? ||
+        current_user == @presentation.presenter ||
+        current_user.email == Houston::Nanoconf.config.officer
       end
     end
   end

@@ -3,6 +3,6 @@ module Houston::Nanoconfs
 
     self.table_name = "presentations"
 
-    belongs_to  :presenter, class_name: "User"
+    belongs_to :presenter, class_name: "User"
   end
 end

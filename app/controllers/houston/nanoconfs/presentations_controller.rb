@@ -40,7 +40,7 @@ module Houston
       end
 
       def authenticate_presenter
-        unless can_edit_presentation?
+        unless can? :update, @presentation
           flash[:error] = "You are not authorized to edit this presentation"
           redirect_to presentations_path
         end
@@ -63,11 +63,6 @@ module Houston
         params.require(:presentation).permit(:title, :description)
       end
 
-      def can_edit_presentation?
-        @presentation.presenter.nil? ||
-        current_user == @presentation.presenter ||
-        current_user.email == Houston::Nanoconfs.config.officer
-      end
     end
   end
 end

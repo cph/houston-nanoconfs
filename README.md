@@ -9,14 +9,6 @@ In your `Gemfile`, add:
 
     gem "houston-nanoconf"
 
-And in `config/main.rb`, add:
-
-```ruby
-use :nanoconfs do
-  officer "john.doe@example.com"
-end
-```
-
 And then execute:
 
     $ bundle

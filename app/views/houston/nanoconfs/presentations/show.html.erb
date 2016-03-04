@@ -1,10 +1,19 @@
 <div class="nanoconf-info">
-  <h1>
+  <h1 class="presentation-title">
     <%= @presentation.title %>
-    <small><%= link_to "Edit", edit_presentation_path(@presentation) if current_user == @presentation.presenter %></small>
+    <% if can? :update, @presentation %>
+      <small><%= link_to "Edit", edit_presentation_path(@presentation) %></small>
+    <% end %>
   </h1>
+
+  <% unless can? :update, @presentation %>
+    <p class="presenter-info"><%= avatar_for(@presentation.presenter) %> By: <%= @presentation.presenter.name %> </p>
+  <% end %>
+  <hr>
 
   <div class="tab-pane markdown-body" id="preview">
     <%= mdown(@presentation.description) %>
   </div>
+
+  <%= link_to "Back", presentations_path %>
 </div>

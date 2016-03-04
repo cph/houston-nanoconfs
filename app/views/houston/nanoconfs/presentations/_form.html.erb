@@ -2,7 +2,12 @@
   <div class="row-fluid">
     <div class="span6 controls">
       <%= f.text_field :title, placeholder: "Title" %>
+    </div>
+  </div>
 
+  <div class="row-fluid">
+    <div class="span6 controls">
+      <%= select("presentation", "date", @dropdown_dates, selected: @presentation.date.strftime("%B %d, %Y")) %>
     </div>
   </div>
 

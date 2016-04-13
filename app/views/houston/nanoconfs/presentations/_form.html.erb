@@ -17,7 +17,7 @@
         <p>Markdown</p>
       </a>
     </li>
-    <li>
+    <li id="preview_tab">
       <a href="#preview" data-toggle="tab">
         <p>Preview</p>
       </a>
@@ -26,8 +26,10 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="markdown">
-      <div class="row-fluid">
-        <%= f.text_area :description, placeholder: "Description", id: "nanoconf-description", rows: 10 %>
+      <div class="row-fluid" id="nanoconf-description">
+        <div class="uploader">
+          <textarea placeholder="Description" name="description"></textarea>
+        </div>
       </div>
     </div>
 

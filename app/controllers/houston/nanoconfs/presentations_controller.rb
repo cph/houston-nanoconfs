@@ -51,6 +51,10 @@ module Houston
           flash[:error] = "There was a problem"
         end
       end
+
+      def past_presentations
+        @presentations = Houston::Nanoconfs::Presentation.where("date < ?", Date.today)
+      end
     private
 
       def set_presentation

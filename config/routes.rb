@@ -1,6 +1,7 @@
 Houston::Nanoconfs::Engine.routes.draw do
 
   scope "nanoconfs" do
+    get "past", to: "presentations#past_presentations", as: "past_presentations"
     get "", to: "presentations#index", as: "presentations"
     get "new", to: "presentations#new", as: "new_presentation"
     post "", to: "presentations#create", as: "create_presentation"

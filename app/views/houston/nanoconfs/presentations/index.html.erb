@@ -1,6 +1,11 @@
 <% content_for :title do %>
 <h1 class="project-banner space-below">
   Upcoming Presentations
+  <%= link_to past_presentations_path, class: "project-banner-btn" do %>
+  <i class="fa fa-television" aria-hidden="true"></i>
+    <span>Past <br />
+    Presentations</span>
+  <% end %>
 </h1>
 <% end %>
 

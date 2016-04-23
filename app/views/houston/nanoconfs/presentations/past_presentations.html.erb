@@ -1,0 +1,30 @@
+<% content_for :title do %>
+<h1 class="project-banner space-below">
+  Past Presentations
+  <%= link_to presentations_path, class: "project-banner-btn" do %>
+    <i class="fa fa-television" aria-hidden="true"></i>
+    <span>Upcoming <br />
+    Presentations</span>
+  <% end %>
+</h1>
+<% end %>
+
+<div id="presentation-list">
+  <% @presentations.each do |presentation| %>
+    <div class="presentation">
+      <h4><%= presentation.date.strftime("%b %d, %Y") %></h4>
+      <div class="presentation-info">
+        <h3 class="presentation-title">
+          <a href="/nanoconfs/<%= presentation.id %>">
+            <%= presentation.title %>
+          </a>
+        </h3>
+        <% if can? :update, presentation %>
+          <%= link_to "Edit", edit_presentation_path(presentation) %>
+        <% else %>
+          <p class="presenter-info">By: <%= presentation.presenter.name %> <%= avatar_for(presentation.presenter) %></p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -39,6 +39,16 @@
   .presenter-info {
     display: inline-block;
   }
+
+  .tags {
+    padding-bottom: 10px;
+    padding-left: 14px;
+  }
+
+  .presentation-info {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
 
@@ -61,6 +71,16 @@
   h1 {
     padding-left: 20px;
   }
+
+  .fa-tag {
+    float: left;
+    margin-top: 7px;
+  }
+
+  input#tags {
+    min-width: 470px;
+    margin-left: 5px;
+  }
 }
 
 .nanoconf-info {
@@ -69,6 +89,19 @@
   .presentation-title {
     margin-bottom: 20px;
   }
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 4px;
+  font-size: 11.844px;
+  line-height: 14px;
+  color: #ffffff;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background-color: #aaa;
+  border-radius: 3px;
+  margin-right: 0.33em;
 }
 
 .markdown-body {

@@ -38,6 +38,7 @@ module Houston
 
       def edit
         @dropdown_dates = get_dropdown_dates
+        @presentation.tags = @presentation.tags.join(", ") if @presentation.tags
       end
 
       def update
@@ -88,8 +89,9 @@ module Houston
       end
 
       def presentation_params
-        permitted_params = params.require(:presentation).permit(:title, :description, :date)
+        permitted_params = params.require(:presentation).permit(:title, :description, :date, :tags)
         permitted_params[:date] = permitted_params[:date].to_date
+        permitted_params[:tags] = permitted_params[:tags].split(',').map(&:strip)
         permitted_params
       end
 

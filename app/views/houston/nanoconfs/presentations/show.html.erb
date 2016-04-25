@@ -9,6 +9,11 @@
   <% unless can? :update, @presentation %>
     <p class="presenter-info"><%= avatar_for(@presentation.presenter) %> By: <%= @presentation.presenter.name %> </p>
   <% end %>
+  <% if @presentation.tags %>
+    <% @presentation.tags.each do |tag| %>
+      <span class="tag"><%= tag %></span>
+    <% end %>
+  <% end %>
   <hr>
 
   <div class="tab-pane markdown-body" id="preview">

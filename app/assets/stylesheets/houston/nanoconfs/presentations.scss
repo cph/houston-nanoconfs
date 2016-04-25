@@ -1,7 +1,7 @@
 #presentation-list {
   .presentation h4 {
     position: relative;
-    margin: 0 0 14px 0;
+    margin: 0 0 0px 0;
     padding: 10px 14px 8px;
     background: #efefef;
     -webkit-border-radius: 3px;
@@ -22,8 +22,8 @@
 
   .presentation-title {
     position: relative;
-    margin: 0 0 14px 0;
-    padding: 10px 14px 8px;
+    margin: 0 0 0px 0;
+    padding: 0px 14px 0px;
     display: inline-block;
 
     a {
@@ -84,10 +84,20 @@
 }
 
 .nanoconf-info {
-  margin-top: -100px;
+  margin-top: -50px;
   margin-left: 30px;
-  .presentation-title {
-    margin-bottom: 20px;
+
+  .light-text {
+    color: grey;
+    font-style: italic;
+  }
+
+  .date {
+    font-size: 16px;
+  }
+
+  hr {
+    height: 1px;
   }
 }
 

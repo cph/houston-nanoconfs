@@ -1,10 +1,11 @@
 <div class="nanoconf-info">
-  <h1 class="presentation-title">
+  <span class="date"><i class="fa fa-calendar" aria-hidden="true"></i> <%= @presentation.date.strftime("%b %d, %Y") %></span>
+  <h2 class="presentation-title">
     <%= @presentation.title %>
     <% if can? :update, @presentation %>
       <small><%= link_to "Edit", edit_presentation_path(@presentation) %></small>
     <% end %>
-  </h1>
+  </h2>
 
   <% unless can? :update, @presentation %>
     <p class="presenter-info"><%= avatar_for(@presentation.presenter) %> By: <%= @presentation.presenter.name %> </p>
@@ -17,8 +18,15 @@
   <hr>
 
   <div class="tab-pane markdown-body" id="preview">
-    <%= mdown(@presentation.description) %>
+    <% unless @presentation.description.blank? %>
+      <%= mdown(@presentation.description) %>
+    <% else %>
+      <span class="light-text">No Description</span>
+    <% end %>
   </div>
 
-  <%= link_to "Back", presentations_path %>
+  <%= link_to presentations_path do %>
+    <i class="fa fa-angle-left" aria-hidden="true"></i>
+    Back
+  <% end %>
 </div>

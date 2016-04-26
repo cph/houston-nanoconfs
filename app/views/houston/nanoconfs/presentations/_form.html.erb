@@ -2,7 +2,11 @@
 
   <div class="row-fluid">
     <div class="span6 controls">
-      <%= select("presentation", "date", @dropdown_dates, selected: @presentation.date.strftime("%B %d, %Y")) %>
+      <% if @presentation.past? %>
+        <h4><%= @presentation.date.strftime("%B %d, %Y") %></h4>
+      <% else %>
+        <%= select("presentation", "date", @dropdown_dates, selected: @presentation.date.strftime("%B %d, %Y")) %>
+      <% end %>
     </div>
   </div>
 

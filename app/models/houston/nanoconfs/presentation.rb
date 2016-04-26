@@ -6,5 +6,9 @@ module Houston::Nanoconfs
     scope :all_tags, -> (tags){where('tags @> ARRAY[?]', tags)}
 
     belongs_to :presenter, class_name: "User"
+
+    def past?
+      date < Date.today
+    end
   end
 end

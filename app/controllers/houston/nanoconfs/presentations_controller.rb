@@ -25,7 +25,6 @@ module Houston
 
       def create
         presentation = Houston::Nanoconfs::Presentation.new(presentation_params)
-        presentation.presenter = current_user
         if presentation.save
           flash[:notice] = "Presentation Created!"
           Houston.observer.fire "nanoconf:create", presentation
@@ -83,16 +82,16 @@ module Houston
         (start_date..end_date).to_a.select {|k| my_days.include?(k.wday)}
       end
 
-      def create_new_nanoconfs
-        next_six_months.each do |friday|
-          Houston::Nanoconfs::Presentation.find_or_create_by(date: friday)
-        end
-      end
 
       def presentation_params
-        permitted_params = params.require(:presentation).permit(:title, :description, :date, :tags)
+        permitted_params = params.require(:presentation).permit(:title, :description, :date, :tags, :presenter)
         permitted_params[:date] = permitted_params[:date].to_date if permitted_params[:date]
         permitted_params[:tags] = permitted_params[:tags].split(',').map(&:strip)
+
+        presenter_email = permitted_params.delete(:presenter)
+        permitted_params[:presenter] = current_user
+        permitted_params[:presenter] = User.find_by_email(presenter_email) if current_user.email == "chase.clettenberg@cph.org"
+
         permitted_params
       end
 

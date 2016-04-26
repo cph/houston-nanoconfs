@@ -7,6 +7,10 @@
       <% else %>
         <%= select("presentation", "date", @dropdown_dates, selected: @presentation.date.strftime("%B %d, %Y")) %>
       <% end %>
+
+      <% if current_user.email == "chase.clettenberg@cph.org" %>
+        <%= select("presentation", "presenter", User.unretired.map { |u| ["#{u.name} (#{u.role}#{", Admin" if u.administrator?})", u.email]}, selected: @presentation.presenter.try(:email))%>
+      <% end %>
     </div>
   </div>
 

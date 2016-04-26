@@ -55,6 +55,10 @@
 #nanoconf-form {
   margin-top: -100px;
 
+  input#presentation_title {
+    width: 500px;
+  }
+
   #nanoconf-description {
     display: block;
     width: 500px;
@@ -68,7 +72,7 @@
     min-height: 200px
   }
 
-  h1 {
+  h2 {
     padding-left: 20px;
   }
 

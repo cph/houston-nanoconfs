@@ -24,6 +24,13 @@
         <% else %>
           <p class="presenter-info">By: <%= presentation.presenter.name %> <%= avatar_for(presentation.presenter) %></p>
         <% end %>
+        <% if presentation.tags? %>
+          <div class="tags">
+            <% presentation.tags.each do |tag| %>
+              <span class="tag"><%= tag %></span>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>

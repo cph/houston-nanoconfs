@@ -60,6 +60,7 @@ module Houston
 
       def set_presentation
         @presentation = Houston::Nanoconfs::Presentation.find(params[:id])
+        @presentation_list_path = @presentation.past? ?  past_presentations_path : presentations_path
       end
 
       def get_dropdown_dates

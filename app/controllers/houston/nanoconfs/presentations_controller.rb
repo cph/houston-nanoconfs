@@ -2,29 +2,30 @@ module Houston
   module Nanoconfs
     class PresentationsController < ApplicationController
       before_action :set_presentation, only: [:show, :edit, :update]
-      before_action :authenticate_presenter, only: [:edit]
       before_action :set_presentations, only: [:index, :new, :edit]
       attr_reader :presentations, :presentation
 
       layout "houston/nanoconfs/application"
 
       def index
-
+        authorize! :read, Houston::Nanoconfs::Presentation
       end
 
       def show
-
+        authorize! :read, @presentation
       end
 
       def new
         new_presentation_date = Date.today
         new_presentation_date = params[:date].to_date if params[:date]
         @presentation = Houston::Nanoconfs::Presentation.new(date: new_presentation_date)
+        authorize! :create, @presentation
         @dropdown_dates = get_dropdown_dates
       end
 
       def create
         presentation = Houston::Nanoconfs::Presentation.new(presentation_params)
+        authorize! :create, presentation
         if presentation.save
           flash[:notice] = "Presentation Created!"
           Houston.observer.fire "nanoconf:create", presentation
@@ -36,11 +37,13 @@ module Houston
       end
 
       def edit
+        authorize! :update, @presentation
         @dropdown_dates = get_dropdown_dates
         @presentation.tags = @presentation.tags.join(", ") if @presentation.tags
       end
 
       def update
+        authorize! :update, @presentation
         @presentation.presenter = current_user
 
         if presentation.update_attributes(presentation_params)
@@ -55,6 +58,7 @@ module Houston
       def past_presentations
         @presentations = Houston::Nanoconfs::Presentation.where("date < ?", Date.today)
       end
+
     private
 
       def set_presentation
@@ -66,13 +70,6 @@ module Houston
         @presentations.select do |friday, nanoconf|
           nanoconf.nil? || (params[:action] == "edit" && nanoconf.id == params[:id].to_i)
         end.keys.map { |date| date.strftime("%B %d, %Y") }
-      end
-
-      def authenticate_presenter
-        unless can? :update, @presentation
-          flash[:error] = "You are not authorized to edit this presentation"
-          redirect_to presentations_path
-        end
       end
 
       def next_six_months

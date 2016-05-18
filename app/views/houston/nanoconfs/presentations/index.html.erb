@@ -34,7 +34,9 @@
           <% end %>
         </div>
       <% else %>
-        <h5 class="signup-link"><%= link_to "Sign up to Present!", new_presentation_path(date: friday.strftime("%Y-%m-%d")) %></h5>
+        <% if can? :create, Houston::Nanoconfs::Presentation %>
+          <h5 class="signup-link"><%= link_to "Sign up to Present!", new_presentation_path(date: friday.strftime("%Y-%m-%d")) %></h5>
+        <% end %>
       <% end %>
     </div>
   <% end %>

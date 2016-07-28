@@ -28,7 +28,7 @@ module Houston
         authorize! :create, presentation
         if presentation.save
           flash[:notice] = "Presentation Created!"
-          Houston.observer.fire "nanoconf:create", presentation
+          Houston.observer.fire "nanoconf:create", presentation: presentation
           redirect_to presentation
         else
           flash[:error] = "There was an error saving your presentation"
@@ -48,7 +48,7 @@ module Houston
 
         if presentation.update_attributes(presentation_params)
           flash[:notice] = "Presentation Updated!"
-          Houston.observer.fire "nanoconf:update", presentation
+          Houston.observer.fire "nanoconf:update", presentation: presentation
           redirect_to presentation
         else
           flash[:error] = "There was a problem"

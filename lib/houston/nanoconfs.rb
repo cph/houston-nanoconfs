@@ -12,4 +12,12 @@ module Houston
     end
 
   end
+
+
+
+  register_events {{
+    "nanoconf:create" => params("presentation").desc("A nanoconf presentation was created"),
+    "nanoconf:update" => params("presentation").desc("A nanoconf presentation was updated")
+  }}
+
 end
